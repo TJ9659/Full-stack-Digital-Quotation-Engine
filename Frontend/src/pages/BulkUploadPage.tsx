@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import axios from "axios";
+import api from "../services/api"
 
 const BulkUploadForm = () => {
   const [uploadStatus, setUploadStatus] = useState("");
@@ -22,8 +23,8 @@ const BulkUploadForm = () => {
     formData.append("file", data.csvFile[0]);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/quotations/bulk-upload",
+      const response = await api.post(
+        "/quotations/bulk-upload",
         formData,
         {
           headers: {
@@ -36,7 +37,7 @@ const BulkUploadForm = () => {
       reset();
     } catch (error) {
       console.error("Upload error:", error);
-      setUploadStatus("Failed to upload file. Check backend logs.");
+      setUploadStatus("Failed to upload file. Please try again later.");
     } finally {
       setIsLoading(false);
     }

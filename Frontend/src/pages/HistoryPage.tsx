@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../services/api"
 
 interface QuotationData {
   quotations: any[];
@@ -23,8 +24,8 @@ const HistoryPage = () => {
     const fetchPage = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(
-          `http://localhost:8080/api/quotations/history?page=${currentPage}&size=${pageSize}`,
+        const res = await api.get(
+          `/quotations/history?page=${currentPage}&size=${pageSize}`,
         );
         console.log(res.data);
         setData(res.data);

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import api from "../services/api"
 
 const QuotationForm = () => {
   const [result, setResult] = useState(null);
@@ -16,9 +17,8 @@ const QuotationForm = () => {
   const onSubmit = async (data: any) => {
     setIsLoading(true);
     try {
-      // Connecting to your Java Spring Boot API
-      const response = await axios.post(
-        "http://localhost:8080/api/quotations/calculate",
+      const response = await api.post(
+        "/quotations/calculate",
         data,
       );
       setResult(response.data);
@@ -87,6 +87,7 @@ const QuotationForm = () => {
               <input
                 type="number"
                 min="18"
+                placeholder="18"
                 onKeyDown={(e) => {
                   if (
                     !/^[0-9]$/.test(e.key) &&

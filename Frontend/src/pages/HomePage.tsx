@@ -1,30 +1,25 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import api from "../services/api";
 
 const Home = () => {
   const [recentQuotes, setRecentQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
     setLoading(true);
-
-    axios
-      .get("http://localhost:8080/api/quotations/recent-quotes")
+    api
+      .get("/quotations/recent-quotes")
       .then((res) => {
-        if (isMounted) {
-          setRecentQuotes(res.data.data || []); 
-        }
+          setRecentQuotes(res.data.quotations || []);
       })
       .catch((err) => {
         console.error("Error fetching quotes:", err);
       })
       .finally(() => {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       });
-
-    return () => { isMounted = false; };
   }, []);
 
   return (
